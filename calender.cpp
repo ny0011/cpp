@@ -1,4 +1,5 @@
 #include <iostream>
+#define ONE 1
 #define MONTH 12
 #define DAY31 31
 #define DAY30 30
@@ -46,9 +47,9 @@ void Date::add_day(int inc)
     }
     else
     {
-        add_month(1);
-        index_day = 1;
-        inc = inc + day - month_day[index_month - 1] - 1;
+        add_month(ONE);
+        index_day = ONE;
+        inc = inc + day - month_day[index_month - 1] - index_day;
         index_month++;
     }
 
@@ -65,7 +66,7 @@ void Date::add_day(int inc)
 
         if (inc + index_day >= month_day[index_month - 1])
         {
-            add_month(1);
+            add_month(ONE);
             inc = inc - month_day[index_month - 1];
         }
         else if (inc + index_day < month_day[index_month - 1])
@@ -75,18 +76,18 @@ void Date::add_day(int inc)
         }
 
         index_month++;
-        if (index_month > 12)
+        if (index_month > MONTH)
         {
-            index_month -= 12;
-            add_year(1);
+            index_month -= MONTH;
+            add_year(ONE);
         }
     }
 }
 void Date::add_month(int inc)
 {
-    add_year((inc + month - 1) / 12);
-    month = month + inc % 12;
-    month = (month == 12) ? 12 : month % 12;
+    add_year((inc + month - 1) / MONTH);
+    month = month + inc % MONTH;
+    month = (month == MONTH) ? MONTH : month % MONTH;
 }
 void Date::add_year(int inc)
 {
